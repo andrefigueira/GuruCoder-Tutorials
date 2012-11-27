@@ -1,0 +1,100 @@
+body {
+	font-family:Helvetica-light;
+	font-size:14px;
+	padding:0;
+	margin:0;
+}
+
+h1 {
+	font-weight:normal;
+	margin:0 0 10px 0;
+}
+
+h2, h3, h4, h5, h6 {
+	font-weight:normal;
+}
+
+a {
+	text-decoration:none;
+	color:#777;
+	display:block;
+	margin:0 0 10px 0;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+:focus {outline:none;}
+
+label { display:block; margin:0 0 5px 0;}
+
+input {
+	display:block;
+	margin:0 0 5px 0;
+}
+
+input[type=submit] {
+	cursor:pointer;
+}
+
+table {
+	width:100%;
+	box-shadow:0 0 5px #CCC;
+	-webkit-box-shadow:0 0 5px #CCC;
+	-moz-box-shadow:0 0 5px #CCC;
+	-o-box-shadow:0 0 5px #CCC;
+	margin:0 0 10px 0;
+}
+
+table tr th {
+	text-align:left;
+	font-weight:bold;
+	padding:10px;
+	background:#F9F9F9;
+}
+
+table tr td {
+	padding:10px;
+}
+
+table tr.empty td {
+	background:#F9F9F9;
+}
+
+
+.clear { clear:both;}
+.bold { font-weight:bold;}
+
+#container {
+	width:960px;
+	margin:0 auto;
+	padding:20px;
+	box-shadow:0 0 10px #CCC;
+	-webkit-box-shadow:0 0 10px #CCC;
+	-moz-box-shadow:0 0 10px #CCC;
+	-o-box-shadow:0 0 10px #CCC;
+}
+
+.notify {
+	padding:10px;
+	background:#E9E9E9;
+	margin:0 0 10px 0;
+}
+
+.product {
+	float:left;
+	margin:0 10px 0 0;
+	box-shadow:0 0 5px #CCC;
+	-webkit-box-shadow:0 0 5px #CCC;
+	-moz-box-shadow:0 0 5px #CCC;
+	-o-box-shadow:0 0 5px #CCC;
+}
+
+	.product .info { padding:10px;}
+
+	.product h3 { 
+		margin:0 0 5px 0;
+		background:#F9F9F9;
+		padding:10px;
+	}
