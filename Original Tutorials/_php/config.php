@@ -1,5 +1,9 @@
 <?php
 
+error_reporting(E_ALL);
+
+ini_set('display_errors', 1);
+
 //Base URL of the server links
 define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].'/');
 

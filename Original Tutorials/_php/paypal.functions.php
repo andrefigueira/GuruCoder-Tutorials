@@ -12,30 +12,41 @@ function getProducts()
 	//Function to display the products on the front end
 	
 	//Create the MYSQL db connection
-	$db = new Connection(DB_HOST, DB_USER, DB_PASS, T4_DB_NAME);
+	$db = new mysqli(DB_HOST, DB_USER, DB_PASS, T4_DB_NAME);
 	
 	//Query the DB for all the products
 	$result = $db->query('SELECT * FROM products');
 	
-	//Set the items variable so that you can add to it in the loop below
-	$items = '';
-	
-	//Loop through the mysql results
-	while($row = mysql_fetch_assoc($result))
+	if($result->num_rows > 0)
 	{
 	
-		$items .= '
-		<div class="product">
-			<h3>'.stripslashes($row['productName']).'</h3>
-			<div class="info">
-				<img src="'.stripslashes($row['thumbnail']).'" width="auto" height="100" />
-				<p>'.stripslashes($row['description']).'</p>
-				<div class="price">&euro;'.number_format($row['price'], 2).'</div>
-				<a href="addToCart.php?ID='.$row['ID'].'">Add to cart</a>
+		//Set the items variable so that you can add to it in the loop below
+		$items = '';
+		
+		//Loop through the mysql results
+		while($row = $result->fetch_object())
+		{
+		
+			$items .= '
+			<div class="product">
+				<h3>'.stripslashes($row->name).'</h3>
+				<div class="info">
+					<img src="'.stripslashes($row->thumbnail).'" width="auto" height="100" />
+					<p>'.stripslashes($row->description).'</p>
+					<div class="price">&euro;'.number_format($row->price, 2).'</div>
+					<a href="addToCart.php?ID='.$row->ID.'">Add to cart</a>
+				</div>
 			</div>
-		</div>
-		';
+			';
+		
+		}
 	
+	}
+	else
+	{
+		
+		$items = '<p>There are no products in the database.</p>';
+		
 	}
 	
 	echo $items;
@@ -106,26 +117,23 @@ function addToCart()
 
 	//Function for adding a product to the cart based on that products ID.
 	//Create the MYSQL db connection
-	$db = new Connection(DB_HOST, DB_USER, DB_PASS, T4_DB_NAME);
+	$db = new mysqli(DB_HOST, DB_USER, DB_PASS, T4_DB_NAME);
 
 	//Check if the ID variable is set
 	if(isset($_GET['ID']))
 	{
 	
 		//Escape the string from the URL
-		$ID = mysql_real_escape_string($_GET['ID']);
+		$ID = $db->real_escape_string($_GET['ID']);
 	
 		//Check if the ID passed exists within the database
 		$result = $db->query('SELECT * FROM products WHERE ID = "'.$ID.'" LIMIT 1');
 		
-		//Get the total results of if any product matched the query
-		$totalRows = mysql_num_rows($result);
-		
 		//If the product ID exists in the database then insert it to the cart
-		if($totalRows > 0)
+		if($result->num_rows > 0)
 		{
 		
-			while($row = mysql_fetch_assoc($result))
+			while($row = $result->fetch_object())
 			{
 			
 				//Check if the cart exists
@@ -133,7 +141,7 @@ function addToCart()
 				{
 					
 					//The cart exists so just add it to the cart
-					insertToCart($ID, $row['productName'], $row['price']);
+					insertToCart($ID, $row->name, $row->price);
 				
 				}
 				else
@@ -143,7 +151,7 @@ function addToCart()
 					createCart();
 					
 					//The cart is now created so add the product to the cart
-					insertToCart($ID, $row['productName'], $row['price']);
+					insertToCart($ID, $row->name, $row->price);
 				
 				}
 			
